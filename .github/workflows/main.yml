@@ -9,9 +9,7 @@ jobs:
         uses: actions/checkout@v2
       - name: SQLx action step
         uses: ./
-        id: sqlx
-        with:
-          args: "--help"
+      - run: "sqlx --help"
 
   psql_test:
     runs-on: ubuntu-latest
@@ -41,12 +39,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Database reset step
+      - name: Install SQLx
         uses: ./
-        with:
-          args: '--database-url "postgres://test@localhost:5432/test" database reset'
 
-      - name: Migrate step
-        uses: ./
-        with:
-          args: '--database-url "postgres://test@localhost:5432/test" migrate run'
+      - run: 'sqlx --database-url "postgres://test@localhost:5432/test" database reset'
+
+      - run: 'sqlx --database-url "postgres://test@localhost:5432/test" migrate run'

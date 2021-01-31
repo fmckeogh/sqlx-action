@@ -1,0 +1,12 @@
+name: "SQLx"
+description: "SQLx command line interface Action"
+inputs:
+  args:
+    description: "Arguments"
+    required: true
+    default: "migrate run"
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.args }}

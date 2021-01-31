@@ -5,4 +5,5 @@ RUN cargo install sqlx-cli --version $version
 FROM buildpack-deps:buster
 WORKDIR /build
 COPY --from=build /usr/local/cargo/bin/sqlx /
-ENTRYPOINT ["/sqlx"]
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]

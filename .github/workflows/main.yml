@@ -1,9 +1,9 @@
 on: [push]
 
 jobs:
-  help_test:
+  usage_test:
     runs-on: ubuntu-latest
-    name: Help Test
+    name: Print CLI Usage Test
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -12,3 +12,41 @@ jobs:
         id: sqlx
         with:
           args: "--help"
+
+  psql_test:
+    runs-on: ubuntu-latest
+    name: PostgresQL Database Reset/Migration Test
+
+    defaults:
+      run:
+        working-directory: testdata/psql_demo
+
+    services:
+      postgres:
+        image: postgres:13-alpine
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: test
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: ""
+          POSTGRES_HOST_AUTH_METHOD: trust
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Database reset step
+        uses: ./
+        with:
+          args: '--database-url "postgres://test@localhost:5432/test" database reset'
+
+      - name: Migrate step
+        uses: ./
+        with:
+          args: '--database-url "postgres://test@localhost:5432/test" migrate run'

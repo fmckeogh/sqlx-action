@@ -2,9 +2,8 @@ name: "SQLx CLI"
 description: "SQLx command line interface Action"
 inputs:
   args:
-    description: "Arguments"
+    description: "Command"
     required: true
-    default: "migrate run"
 runs:
   using: "docker"
   image: "Dockerfile"

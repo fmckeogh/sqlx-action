@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS demo (
+    column1 UUID PRIMARY KEY NOT NULL,
+    column2 BIGINT
+);

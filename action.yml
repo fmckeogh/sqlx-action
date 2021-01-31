@@ -1,4 +1,4 @@
-name: "SQLx"
+name: "SQLx CLI"
 description: "SQLx command line interface Action"
 inputs:
   args:

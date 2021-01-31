@@ -5,4 +5,4 @@ RUN cargo install sqlx-cli --version $version
 FROM buildpack-deps:buster
 WORKDIR /build
 COPY --from=build /usr/local/cargo/bin/sqlx /
-CMD ["/sqlx"]
+ENTRYPOINT ["/sqlx"]
